@@ -34,7 +34,7 @@ public:
 	bool connectWifi(char[], String);
 	bool openTCPConnection(String, String);
 	bool closeTCPConnection();
-	void send(String);
+	void send(char[]);
 	void printDebug(String);
 	
 protected:

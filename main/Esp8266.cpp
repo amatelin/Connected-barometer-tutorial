@@ -211,7 +211,7 @@ public method send(String)
 Print string to open TCP connection
 Announces string length, checks for cursor and wait for confirmation code 'SEND OK'
 */
-void Esp8266::send(String content)
+void Esp8266::send(char content[])
 {
 	String cmd;
 	String msg = "Sent : ";
@@ -220,7 +220,8 @@ void Esp8266::send(String content)
 	printDebug("Writing to TCP connection");
 	printDebug("Content to write :");
 	printDebug(content);
-	cmd = "AT+CIPSEND=" + String(content.length());
+	int len = strlen(content);
+	cmd = "AT+CIPSEND=" + String(len);
 	espSerial.println(cmd);
 	printDebug("Sent : " + cmd);
 	

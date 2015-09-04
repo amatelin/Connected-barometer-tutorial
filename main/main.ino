@@ -22,15 +22,15 @@
 // Defining connection settings
 #define SSID ""
 #define PASS ""
-#define IP "api.thingspeak.com"
+#define IP "arduino.plot.ly"
 #define PORT "80"
 #define API_KEY ""
 
 // Defining delay time between each loop
-#define WAIT 30000
+#define WAIT 15000
 
 // Enable debug mode if true (will print debug messages to Serial)
-bool debug = false;
+bool debug = true;
 
 // Instantiating sensors
 DHT dht(DHTPIN, DHTTYPE);
@@ -108,20 +108,16 @@ void loop()
 
 void pushData(String temp, String humid, String pres, String lum)
 {
-	String call;
-	call += "GET /update?key="; 
-	call += API_KEY;
-	call += "&field1=";
-	call += temp;
-	call += "&field2=";
-	call += humid;
-	call += "&field3=";
-	call += pres;
-	call += "&field4=";
-	call += lum;
-	call += "\r\n";
-	
 	bool status = esp8266.openTCPConnection(IP, PORT);
+	
+	char call[] = "POST / HTTP/1.1\r\n";
+	strcat(call, "Host: arduino.plot.ly\r\n");
+	strcat(call, "User-Agent: Arduino\r\n");
+	strcat(call, "Transfer-Encoding: chunked\r\n");
+	strcat(call, "Connection: close\r\n");
+	strcat(call, "\r\n");
+	strcat(call, "\r\n{\"x\":15, \"y\": 3, \"streamtoken\": \"urqcbfmjot\"\"}\n\r\n");
+	
 	if (!status) return;
 	
 	esp8266.send(call);
