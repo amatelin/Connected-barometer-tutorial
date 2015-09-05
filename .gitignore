@@ -4,7 +4,7 @@ ehthumbs.db
 
 # Folder config file
 /main/Debug
-
+/main/Release
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
